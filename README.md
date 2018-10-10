@@ -2,6 +2,18 @@
 
 Official ipinfo.io Perl library
 
+## RUNNING IN DOCKER
+
+* docker build . -t gkirok/geo-ipinfo:latest; 
+* docker run -it gkirok/geo-ipinfo:latest
+* /usr/local/bin/perl /opt/output.pl 8.8.8.8 
+* export RELEASE_TESTING=yes && /bin/perl -T Geo-IPinfo/t/manifest.t
+* export RELEASE_TESTING=yes && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done
+
+### BUILD TEST IMAGE AND RUN
+* docker build --build-arg RELEASE_TESTING=yes . -t gkirok/geo-ipinfo:test
+* docker run -it gkirok/geo-ipinfo:test
+
 ## EXAMPLE
 
     use Geo::IPinfo;
@@ -49,6 +61,9 @@ Official ipinfo.io Perl library
         region : California
 
     The city of 8.8.8.8 is Mountain View
+
+## RUNNING TEST
+* `export RELEASE_TESTING=yes && for i in *.t; do /bin/perl -T $i; done`
 
 ## USAGE
 
