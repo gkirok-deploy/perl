@@ -8,7 +8,10 @@ RUN test -z "$RELEASE_TESTING" || cpanm Test::CheckManifest Test::Pod Test::Pod:
 COPY ./Geo-IPinfo /opt/Geo-IPinfo
 WORKDIR /opt/Geo-IPinfo
 RUN perl Makefile.PL
-RUN make && make install
+#COPY output.pl /opt/Geo-IPinfo/none/Geo::IPinfo.3pm
+RUN test -z "$RELEASE_TESTING" || RELEASE_TESTING=1 make test && make install
+#RUN make && make install
 COPY output.pl /opt/output.pl
-RUN test -z "$RELEASE_TESTING" || echo 'export RELEASE_TESTING=yes && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done;' > /opt/test.sh; chmod 755 /opt/test.sh
-ENTRYPOINT "/opt/test.sh"
+COPY docker-entrypoint.sh /opt/docker-entrypoint.sh
+RUN test -z "$RELEASE_TESTING" || echo 'export RELEASE_TESTING=1 && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done;' > /opt/test.sh;
+ENTRYPOINT ["/opt/docker-entrypoint.sh"]
