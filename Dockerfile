@@ -1,4 +1,4 @@
-FROM        perl:latest
+FROM perl:latest
 MAINTAINER  gkirok
 ARG RELEASE_TESTING
 

@@ -1,5 +1,6 @@
 node {
     def app
+    def versionNumber = 1.0
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
@@ -10,7 +11,7 @@ node {
         branchVersion = env.BRANCH_NAME
         branchVersion = branchVersion.replaceAll(/origin\//, "") 
         branchVersion = branchVersion.replaceAll(/\W/, "-")
-        version = "${env.BUILD_NUMBER}-${branchVersion}"
+        version = "${versionNumber}.${env.BUILD_NUMBER}-${branchVersion}"
     }
     stage('Build test image') {
         /* This builds the actual image; synonymous to
