@@ -7,7 +7,8 @@ use lib "Geo-IPinfo/lib";
 
 use Geo::IPinfo;
 
-my $token = "1234567";
+my ($ip) = @ARGV;
+my $token = "14ceeb3ed116cb";
 
 # if you have a valid token, use it
 my $ipinfo = Geo::IPinfo->new($token);
@@ -16,11 +17,11 @@ my $ipinfo = Geo::IPinfo->new($token);
 # my $ipinfo = Geo::IPinfo->new();
 
 # return a hash reference containing all IP related information
-my $data = $ipinfo->info("8.8.8.8");
+my $data = $ipinfo->info($ip);
 
 if (defined $data)   # valid data returned
 {
-  print "Information about IP 8.8.8.8:\n";
+  print "Information about IP $ip:\n";
   for my $key (sort keys %$data )
   {
     printf "%10s : %s\n", $key, $data->{$key};
@@ -33,7 +34,7 @@ else   # invalid data obtained, show error message
 }
 
 # retrieve only city information of the IP address
-my $city = $ipinfo->field("8.8.8.8", "city");
+my $city = $ipinfo->field($ip, "city");
 
-print "The city of 8.8.8.8 is $city\n";
+print "The city of $ip is $city\n";
 

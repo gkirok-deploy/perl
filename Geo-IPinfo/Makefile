@@ -1,7 +1,7 @@
 # This Makefile is for the Geo::IPinfo extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.66 (Revision: 66600) from the contents of
+# 6.68 (Revision: 66800) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
@@ -19,7 +19,7 @@
 #     MIN_PERL_VERSION => q[5.006]
 #     NAME => q[Geo::IPinfo]
 #     PL_FILES => {  }
-#     PREREQ_PM => { LWP::UserAgent=>q[0], Test::More=>q[0], JSON=>q[0] }
+#     PREREQ_PM => { Test::More=>q[0], LWP::UserAgent=>q[0], JSON=>q[0] }
 #     TEST_REQUIRES => {  }
 #     VERSION_FROM => q[lib/Geo/IPinfo.pm]
 #     clean => { FILES=>q[Geo-IPinfo-*] }
@@ -30,30 +30,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /System/Library/Perl/5.18/darwin-thread-multi-2level/Config.pm).
+# These definitions are from config.sh (via /usr/lib64/perl5/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
 AR = ar
-CC = cc
-CCCDLFLAGS =  
-CCDLFLAGS =  
-DLEXT = bundle
+CC = gcc
+CCCDLFLAGS = -fPIC
+CCDLFLAGS = -Wl,--enable-new-dtags -Wl,-rpath,/usr/lib64/perl5/CORE
+DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
 FULL_AR = /usr/bin/ar
-LD = cc -mmacosx-version-min=10.12.1
-LDDLFLAGS = -arch x86_64 -arch i386 -bundle -undefined dynamic_lookup -fstack-protector
-LDFLAGS = -arch x86_64 -arch i386 -fstack-protector
+LD = gcc
+LDDLFLAGS = -shared -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector-strong --param=ssp-buffer-size=4 -grecord-gcc-switches -m64 -mtune=generic -Wl,-z,relro 
+LDFLAGS =  -fstack-protector
 LIBC = 
 LIB_EXT = .a
 OBJ_EXT = .o
-OSNAME = darwin
-OSVERS = 17.0
-RANLIB = /usr/bin/ar s
-SITELIBEXP = /Library/Perl/5.18
-SITEARCHEXP = /Library/Perl/5.18/darwin-thread-multi-2level
-SO = dylib
-VENDORARCHEXP = /Network/Library/Perl/5.18/darwin-thread-multi-2level
-VENDORLIBEXP = /Network/Library/Perl/5.18
+OSNAME = linux
+OSVERS = 3.10.0-514.el7.x86_64
+RANLIB = :
+SITELIBEXP = /usr/local/share/perl5
+SITEARCHEXP = /usr/local/lib64/perl5
+SO = so
+VENDORARCHEXP = /usr/lib64/perl5/vendor_perl
+VENDORLIBEXP = /usr/share/perl5/vendor_perl
 
 
 # --- MakeMaker constants section:
@@ -80,53 +80,53 @@ MAN3EXT = 3pm
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = $(SITEPREFIX)
-PERLPREFIX = /
+PERLPREFIX = /usr
 SITEPREFIX = /usr/local
-VENDORPREFIX = /usr/local
-INSTALLPRIVLIB = /Library/Perl/Updates/5.18.2
+VENDORPREFIX = /usr
+INSTALLPRIVLIB = /usr/share/perl5
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = /Library/Perl/5.18
+INSTALLSITELIB = /usr/local/share/perl5
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = /Network/Library/Perl/5.18
+INSTALLVENDORLIB = /usr/share/perl5/vendor_perl
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = /Library/Perl/Updates/5.18.2/darwin-thread-multi-2level
+INSTALLARCHLIB = /usr/lib64/perl5
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = /Library/Perl/5.18/darwin-thread-multi-2level
+INSTALLSITEARCH = /usr/local/lib64/perl5
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = /Network/Library/Perl/5.18/darwin-thread-multi-2level
+INSTALLVENDORARCH = /usr/lib64/perl5/vendor_perl
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
 INSTALLBIN = /usr/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
 INSTALLSITEBIN = /usr/local/bin
 DESTINSTALLSITEBIN = $(DESTDIR)$(INSTALLSITEBIN)
-INSTALLVENDORBIN = /usr/local/bin
+INSTALLVENDORBIN = /usr/bin
 DESTINSTALLVENDORBIN = $(DESTDIR)$(INSTALLVENDORBIN)
 INSTALLSCRIPT = /usr/bin
 DESTINSTALLSCRIPT = $(DESTDIR)$(INSTALLSCRIPT)
 INSTALLSITESCRIPT = /usr/local/bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
-INSTALLVENDORSCRIPT = /usr/local/bin
+INSTALLVENDORSCRIPT = /usr/bin
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
 INSTALLMAN1DIR = /usr/share/man/man1
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
 INSTALLSITEMAN1DIR = /usr/local/share/man/man1
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = /usr/local/share/man/man1
+INSTALLVENDORMAN1DIR = /usr/share/man/man1
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
 INSTALLMAN3DIR = /usr/share/man/man3
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
 INSTALLSITEMAN3DIR = /usr/local/share/man/man3
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = /usr/local/share/man/man3
+INSTALLVENDORMAN3DIR = /usr/share/man/man3
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /System/Library/Perl/5.18
-PERL_ARCHLIB = /System/Library/Perl/5.18/darwin-thread-multi-2level
+PERL_LIB = /usr/share/perl5
+PERL_ARCHLIB = /usr/lib64/perl5
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /System/Library/Perl/5.18/darwin-thread-multi-2level/CORE
+PERL_INC = /usr/lib64/perl5/CORE
 PERL = /usr/bin/perl
 FULLPERL = /usr/bin/perl
 ABSPERL = $(PERL)
@@ -141,9 +141,9 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /System/Library/Perl/5.18/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.66
-MM_REVISION = 66600
+MAKEMAKER   = /usr/share/perl5/vendor_perl/ExtUtils/MakeMaker.pm
+MM_VERSION  = 6.68
+MM_REVISION = 66800
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
@@ -195,7 +195,7 @@ PM_TO_BLIB = lib/Geo/IPinfo.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 6.66
+MM_Unix_VERSION = 6.68
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
 
@@ -245,7 +245,7 @@ makemakerdflt : all
 
 
 # --- MakeMaker dist section:
-TAR = COPY_EXTENDED_ATTRIBUTES_DISABLE=1 COPYFILE_DISABLE=1 tar
+TAR = tar
 TARFLAGS = cvf
 ZIP = zip
 ZIPFLAGS = -r
@@ -442,24 +442,24 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  pm_to_blib.ts mon.out \
-	  blibdirs.ts $(BOOTSTRAP) \
-	  *perl.core $(BASEEXT).exp \
-	  perl.exe MYMETA.json \
-	  core.[0-9][0-9][0-9] MYMETA.yml \
-	  perl$(EXE_EXT) *$(OBJ_EXT) \
-	  core.[0-9] $(BASEEXT).bso \
-	  core.*perl.*.? $(BASEEXT).def \
-	  $(INST_ARCHAUTODIR)/extralibs.all so_locations \
-	  $(MAKE_APERL_FILE) $(INST_ARCHAUTODIR)/extralibs.ld \
-	  *$(LIB_EXT) perl \
-	  perlmain.c core \
-	  $(BASEEXT).x tmon.out \
-	  core.[0-9][0-9] core.[0-9][0-9][0-9][0-9][0-9] \
-	  core.[0-9][0-9][0-9][0-9] lib$(BASEEXT).def \
-	  pm_to_blib 
+	  *$(LIB_EXT) core \
+	  core.[0-9] $(INST_ARCHAUTODIR)/extralibs.all \
+	  core.[0-9][0-9] $(BASEEXT).bso \
+	  pm_to_blib.ts MYMETA.json \
+	  core.[0-9][0-9][0-9][0-9] MYMETA.yml \
+	  $(BASEEXT).x $(BOOTSTRAP) \
+	  perl$(EXE_EXT) tmon.out \
+	  *$(OBJ_EXT) pm_to_blib \
+	  $(INST_ARCHAUTODIR)/extralibs.ld blibdirs.ts \
+	  core.[0-9][0-9][0-9][0-9][0-9] *perl.core \
+	  core.*perl.*.? $(MAKE_APERL_FILE) \
+	  $(BASEEXT).def perl \
+	  core.[0-9][0-9][0-9] mon.out \
+	  lib$(BASEEXT).def perlmain.c \
+	  perl.exe so_locations \
+	  $(BASEEXT).exp 
 	- $(RM_RF) \
-	  Geo-IPinfo-* blib 
+	  blib Geo-IPinfo-* 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
 
 
@@ -472,86 +472,14 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(FIRST_MAKEFILE) $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
 
 # --- MakeMaker metafile section:
-metafile : create_distdir
-	$(NOECHO) $(ECHO) Generating META.yml
-	$(NOECHO) $(ECHO) '---' > META_new.yml
-	$(NOECHO) $(ECHO) 'abstract: '\''Official Perl module to use ipinfo.io geolocation services'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  - '\''ipinfo.io <support@ipinfo.io>'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'build_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  Test::More: '\''0'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: '\''0'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'dynamic_config: 1' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by: '\''ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.150005'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'license: apache' >> META_new.yml
-	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  url: http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
-	$(NOECHO) $(ECHO) '  version: '\''1.4'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'name: Geo-IPinfo' >> META_new.yml
-	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  directory:' >> META_new.yml
-	$(NOECHO) $(ECHO) '    - t' >> META_new.yml
-	$(NOECHO) $(ECHO) '    - inc' >> META_new.yml
-	$(NOECHO) $(ECHO) 'requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  JSON: '\''0'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) '  LWP::UserAgent: '\''0'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) '  perl: '\''5.006'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'version: '\''1.0'\''' >> META_new.yml
-	$(NOECHO) $(ECHO) 'x_serialization_backend: '\''CPAN::Meta::YAML version 0.018'\''' >> META_new.yml
-	-$(NOECHO) $(MV) META_new.yml $(DISTVNAME)/META.yml
-	$(NOECHO) $(ECHO) Generating META.json
-	$(NOECHO) $(ECHO) '{' > META_new.json
-	$(NOECHO) $(ECHO) '   "abstract" : "Official Perl module to use ipinfo.io geolocation services",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "author" : [' >> META_new.json
-	$(NOECHO) $(ECHO) '      "ipinfo.io <support@ipinfo.io>"' >> META_new.json
-	$(NOECHO) $(ECHO) '   ],' >> META_new.json
-	$(NOECHO) $(ECHO) '   "dynamic_config" : 1,' >> META_new.json
-	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.150005",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "license" : [' >> META_new.json
-	$(NOECHO) $(ECHO) '      "apache_2_0"' >> META_new.json
-	$(NOECHO) $(ECHO) '   ],' >> META_new.json
-	$(NOECHO) $(ECHO) '   "meta-spec" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",' >> META_new.json
-	$(NOECHO) $(ECHO) '      "version" : "2"' >> META_new.json
-	$(NOECHO) $(ECHO) '   },' >> META_new.json
-	$(NOECHO) $(ECHO) '   "name" : "Geo-IPinfo",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "no_index" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '      "directory" : [' >> META_new.json
-	$(NOECHO) $(ECHO) '         "t",' >> META_new.json
-	$(NOECHO) $(ECHO) '         "inc"' >> META_new.json
-	$(NOECHO) $(ECHO) '      ]' >> META_new.json
-	$(NOECHO) $(ECHO) '   },' >> META_new.json
-	$(NOECHO) $(ECHO) '   "prereqs" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '      "build" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '         "requires" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '            "Test::More" : "0"' >> META_new.json
-	$(NOECHO) $(ECHO) '         }' >> META_new.json
-	$(NOECHO) $(ECHO) '      },' >> META_new.json
-	$(NOECHO) $(ECHO) '      "configure" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '         "requires" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '            "ExtUtils::MakeMaker" : "0"' >> META_new.json
-	$(NOECHO) $(ECHO) '         }' >> META_new.json
-	$(NOECHO) $(ECHO) '      },' >> META_new.json
-	$(NOECHO) $(ECHO) '      "runtime" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '         "requires" : {' >> META_new.json
-	$(NOECHO) $(ECHO) '            "JSON" : "0",' >> META_new.json
-	$(NOECHO) $(ECHO) '            "LWP::UserAgent" : "0",' >> META_new.json
-	$(NOECHO) $(ECHO) '            "perl" : "5.006"' >> META_new.json
-	$(NOECHO) $(ECHO) '         }' >> META_new.json
-	$(NOECHO) $(ECHO) '      }' >> META_new.json
-	$(NOECHO) $(ECHO) '   },' >> META_new.json
-	$(NOECHO) $(ECHO) '   "release_status" : "stable",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "version" : "1.0",' >> META_new.json
-	$(NOECHO) $(ECHO) '   "x_serialization_backend" : "JSON::PP version 2.27202"' >> META_new.json
-	$(NOECHO) $(ECHO) '}' >> META_new.json
-	-$(NOECHO) $(MV) META_new.json $(DISTVNAME)/META.json
+metafile :
+	$(NOECHO) $(NOOP)
 
 
 # --- MakeMaker signature section:
@@ -852,7 +780,7 @@ ppd :
 	$(NOECHO) $(ECHO) '        <PERLCORE VERSION="5,006,0,0" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="JSON::" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <REQUIRE NAME="LWP::UserAgent" />' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="darwin-thread-multi-2level-5.18" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="x86_64-linux-thread-multi-5.16" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd
