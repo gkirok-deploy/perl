@@ -1,9 +1,7 @@
-environment {
-    TERRAFORM_CMD = 'docker run --network host " -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v `pwd`:/app hashicorp/terraform:light'
-}
 node {
     def app
     def versionNumber = 1.0
+    def TERRAFORM_CMD = 'docker run --network host -w /app -v ${HOME}/.aws:/root/.aws -v ${HOME}/.ssh:/root/.ssh -v $(pwd):/app hashicorp/terraform:light'
 
     stage('Clone repository') {
         /* Let's make sure we have the repository cloned to our workspace */
@@ -33,5 +31,20 @@ node {
                 app.push('latest')
             }
         }
+    }
+    stage('terraform: pull & init') {
+        docker.image("hashicorp/terraform:light")
+        sh "${TERRAFORM_CMD} init -backend=true -input=false"
+    }
+    stage('terraform: plan') {
+        sh "${TERRAFORM_CMD} plan -out=tfplan -input=false"
+        script {
+            timeout(time: 10, unit: 'MINUTES') {
+                input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+            }
+        }
+    }
+    stage('terraform: apply') {
+        sh "${TERRAFORM_CMD} apply -lock=false -input=false tfplan"
     }
 }
