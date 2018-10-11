@@ -1,23 +1,20 @@
-environment {
-    AWS_ACCESS_KEY_ID = credentials('1e72433f-2b8b-44b0-a339-57ae2a884ea4')
-    AWS_SECRET_ACCESS_KEY = credentials('d2fc2528-658d-4995-a8ba-c9e4f2d09e2d')
-}
 node {
+
     def app
     def versionNumber = 1.0
-    def TERRAFORM_CMD = 'docker run --network host -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -w /app -v ${HOME}/.ssh:/root/.ssh -v $(pwd)/terraform:/app hashicorp/terraform:light'
+    def TERRAFORM_CMD = 'docker run --network host -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -w /app -v ${HOME}/.ssh:/root/.ssh -v $(pwd)/terraform-result/${branchVersion.Env}:/app hashicorp/terraform:light'
 
-    stage('clone repo') {
-        /* Let's make sure we have the repository cloned to our workspace */
-
-        checkout scm
-    }
-    stage ('determine version') {
-        branchVersion = env.BRANCH_NAME
-        branchVersion = branchVersion.replaceAll(/origin\//, "") 
-        branchVersion = branchVersion.replaceAll(/\W/, "-")
+    stage ('prepare: determine version') {
+        branchSource = env.BRANCH_NAME
+        branchSource = branchSource.replaceAll(/origin\//, "")
+        branchVersion = branchSource.replaceAll(/\W/, "-")
         version = "${versionNumber}.${env.BUILD_NUMBER}-${branchVersion}"
     }
+    stage('prepare: clone repo') {
+        sh "if [ ! -d \"terraform-result/${branchVersion.Env}\" ]; then mkdir -p terraform-result/${branchVersion.Env}; fi; cp -rf terraform/* terraform-result/${branchVersion.Env}/"
+        checkout scm
+    }
+
     stage('docker: build test image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
@@ -41,7 +38,7 @@ node {
         sh "${TERRAFORM_CMD} init -backend=true -input=false"
     }
     stage('terraform: plan') {
-        withCredentials([string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
+        withCredentials([string(credentialsId: '1e72433f-2b8b-44b0-a339-57ae2a884ea4', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'd2fc2528-658d-4995-a8ba-c9e4f2d09e2d', variable: 'AWS_SECRET_ACCESS_KEY'), string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
             sh "${TERRAFORM_CMD} plan -out=tfplan -input=false -var gk_access_ip=${ACCESS_IP} -var gk_jenkins_ip=${JENKINS_IP}"
         }
         script {
@@ -51,7 +48,7 @@ node {
         }
     }
     stage('terraform: apply') {
-        withCredentials([string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
+        withCredentials([string(credentialsId: '1e72433f-2b8b-44b0-a339-57ae2a884ea4', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'd2fc2528-658d-4995-a8ba-c9e4f2d09e2d', variable: 'AWS_SECRET_ACCESS_KEY'), string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
             sh "${TERRAFORM_CMD} apply -lock=false -input=false tfplan -var gk_access_ip=${ACCESS_IP} -var gk_jenkins_ip=${JENKINS_IP}"
         }
     }
