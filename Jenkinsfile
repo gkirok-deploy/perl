@@ -2,16 +2,16 @@ node {
 
     def app
     def versionNumber = 1.0
-    def TERRAFORM_CMD = 'docker run --network host -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -w /app -v ${HOME}/.ssh:/root/.ssh -v $(pwd)/terraform-result/${branchVersion.Env}:/app hashicorp/terraform:light'
+    def TERRAFORM_CMD = 'docker run --network host -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -w /app -v ${HOME}/.ssh:/root/.ssh -v ./terraform-result/${env.BRANCH_NAME}:/app hashicorp/terraform:light'
 
     stage ('prepare: determine version') {
         branchSource = env.BRANCH_NAME
         branchSource = branchSource.replaceAll(/origin\//, "")
         branchVersion = branchSource.replaceAll(/\W/, "-")
-        version = "${versionNumber}.${env.BUILD_NUMBER}-${branchVersion}"
+        version = "${versionNumber}.${env.BUILD_NUMBER}-${env.BRANCH_NAME}"
     }
     stage('prepare: clone repo') {
-        sh "if [ ! -d \"terraform-result/${branchVersion.Env}\" ]; then mkdir -p terraform-result/${branchVersion.Env}; fi; cp -rf terraform/* terraform-result/${branchVersion.Env}/"
+        sh "if [ ! -d \"terraform-result/${env.BRANCH_NAME}\" ]; then mkdir -p terraform-result/${env.BRANCH_NAME}; fi; cp -rf terraform/* terraform-result/${env.BRANCH_NAME}/"
         checkout scm
     }
 
