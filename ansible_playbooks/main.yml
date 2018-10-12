@@ -5,6 +5,7 @@
 
   roles: 
     - common
+    - docker
 
 #- name: deploy jenkins
 #  hosts: jenkins
