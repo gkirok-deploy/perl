@@ -38,6 +38,6 @@ resource "aws_security_group" "gk_sg" {
 }
 
 resource "aws_key_pair" "gk_key" {
-  key_name   = "${var.gk_owner}-key"
+  key_name   = "${var.gk_rg_name}-key"
   public_key = "${file(var.gk_public_key_path)}"
 }
