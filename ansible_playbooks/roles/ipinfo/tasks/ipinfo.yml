@@ -1,9 +1,15 @@
 ---
-- name: pull an image
-  docker_image:
-    name: gkirok/ipinfo:{{ ipinfo_version }}
+#- name: pull an image
+# docker_image:
+#   name: gkirok/ipinfo:{{ ipinfo_version }}
 
 - name: start container
   docker_container:
     name: ipinfo
-    image: gkirok/ipinfo:{{ ipinfo_version }}
+    image: gkirok/ipinfo:latest
+#    image: gkirok/ipinfo:{{ ipinfo_version }}
+    state: started
+    exposed_ports:
+      - 80
+    ports:
+      "80:80"

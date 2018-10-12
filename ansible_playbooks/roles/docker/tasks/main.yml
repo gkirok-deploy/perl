@@ -25,6 +25,12 @@
 - name: install docker
   yum: name=docker state=present
 
+- name: enable start docker service
+  service:
+    name: docker
+    enabled: yes
+    state: started
+
 - name: install python-pip
   yum: name=python-pip state=present
 

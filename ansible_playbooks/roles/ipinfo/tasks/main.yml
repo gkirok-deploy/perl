@@ -1,3 +1,14 @@
 ---
+#- name: pull an image
+#  docker_image:
+#    name: gkirok/ipinfo:latest
 
-- include: ipinfo.yml
+- name: pull inmage
+  shell: echo "{{ ipinfo_version }}" > hui.txt
+
+- name: pull inmage
+  shell: docker pull gkirok/ipinfo:{{ ipinfo_version }}
+
+
+
+# include: ipinfo.yml
