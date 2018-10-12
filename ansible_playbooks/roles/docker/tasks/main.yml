@@ -21,3 +21,12 @@
     owner: root
     group: root
     mode: 0644
+
+- name: install docker
+  yum: name=docker state=present
+
+- name: install python-pip
+  yum: name=python-pip state=present
+
+- name: install docker-py
+  shell: pip install 'docker-py>=1.7.0'

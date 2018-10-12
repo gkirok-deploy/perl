@@ -1,4 +1,9 @@
+---
 - name: pull an image
   docker_image:
     name: gkirok/ipinfo:{{ ipinfo_version }}
 
+- name: start container
+  docker_container:
+    name: ipinfo
+    image: gkirok/ipinfo:{{ ipinfo_version }}
