@@ -7,9 +7,9 @@
     - common
     - docker
 
-#- name: deploy jenkins
-#  hosts: jenkins
-#  remote_user: root
-#
-#  roles:
-#    - jen
+- name: deploy ipinfo
+  hosts: ipinfo
+#  remote_user: centos
+
+  roles:
+    - ipinfo

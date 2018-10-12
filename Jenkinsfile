@@ -52,7 +52,8 @@ node {
     stage('terraform: apply') {
         withCredentials([string(credentialsId: '1e72433f-2b8b-44b0-a339-57ae2a884ea4', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'd2fc2528-658d-4995-a8ba-c9e4f2d09e2d', variable: 'AWS_SECRET_ACCESS_KEY'), string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
             sh "${TERRAFORM_CMD} apply -lock=false -input=false tfplan"
-            sh "${TERRAFORM_CMD} output -json gk_server_public_ips | jq '.value[0]' > ansible_playbooks/inventory.ini"
+            sh "echo '[ipinfo]' > ansible_playbooks/inventory.ini;"
+            sh "${TERRAFORM_CMD} output -json gk_server_public_ips | jq '.value[0]' >> ansible_playbooks/inventory.ini"
         }
     }
 
@@ -62,6 +63,7 @@ node {
             inventory: 'ansible_playbooks/inventory.ini',
             credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
             becomeUser: 'centos',
-            sudo: true)
+            sudo: true,
+            extras: '-e ipinfo_version="${version}"')
     }
 }
