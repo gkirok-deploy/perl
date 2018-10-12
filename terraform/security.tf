@@ -30,6 +30,13 @@ resource "aws_security_group" "gk_sg" {
     cidr_blocks = ["${var.gk_access_ip}"]
   }
 
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
   tags {
     Name = "${var.gk_rg_name}-sg"
     owner = "${var.gk_owner}"
