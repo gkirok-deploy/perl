@@ -1,0 +1,14 @@
+---
+- name: common config
+  hosts: all
+  remote_user: centos
+
+  roles: 
+    - common
+
+#- name: deploy jenkins
+#  hosts: jenkins
+#  remote_user: root
+#
+#  roles:
+#    - jen
