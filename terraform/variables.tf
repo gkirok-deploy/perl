@@ -7,7 +7,7 @@ variable "ami_id" {
 }
 
 variable "gk_rg_name" {
-  default = "gk-rg"
+  default = "gk"
 }
 
 variable "gk_owner" {

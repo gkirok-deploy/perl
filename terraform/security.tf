@@ -1,5 +1,5 @@
 resource "aws_security_group" "gk_security" {
-  name        = "${var.gk_rg_name}"
+  name        = "${var.gk_rg_name}-sg"
   description = "Allow web access to all and ssh to jenkins"
 
   ingress {
@@ -38,6 +38,6 @@ resource "aws_security_group" "gk_security" {
 }
 
 resource "aws_key_pair" "auth" {
-  key_name   = "${var.gk_owner}"
+  key_name   = "${var.gk_owner}-key"
   public_key = "${file(var.gk_public_key_path)}"
 }
