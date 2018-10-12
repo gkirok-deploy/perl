@@ -1,4 +1,4 @@
-resource "aws_security_group" "gk_security" {
+resource "aws_security_group" "gk_sg" {
   name        = "${var.gk_rg_name}-sg"
   description = "Allow web access to all and ssh to jenkins"
 
@@ -37,7 +37,7 @@ resource "aws_security_group" "gk_security" {
   }
 }
 
-resource "aws_key_pair" "auth" {
+resource "aws_key_pair" "gk_key" {
   key_name   = "${var.gk_owner}-key"
   public_key = "${file(var.gk_public_key_path)}"
 }
