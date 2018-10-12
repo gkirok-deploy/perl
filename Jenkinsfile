@@ -57,6 +57,10 @@ node {
     }
 
     stage('ansible: requirements') {
-
+        ansiblePlaybook(
+            playbook: 'ansible_playbooks/main.yml',
+            inventory: 'ansible_playbooks/inventory.ini',
+            credentialsId: 'ce98a78b-20ed-411c-ae85-c77a9b1b33d8',
+            extras: '-e parameter="some value"')
     }
 }
