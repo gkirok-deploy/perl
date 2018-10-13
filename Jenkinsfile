@@ -63,7 +63,16 @@ node {
             inventory: 'ansible_playbooks/inventory.ini',
             credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
             becomeUser: 'centos',
-            sudo: true,
-            extras: "-vvvv -e ipinfo_version=\"${version}\"")
+            sudo: true)
     }
+    stage('ansible: deploy') {
+        ansiblePlaybook(
+            playbook: 'ansible_playbooks/deploy.yml',
+            inventory: 'ansible_playbooks/inventory.ini',
+            credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
+            becomeUser: 'centos',
+            sudo: true,
+            extras: "-e ipinfo_version=\"${version}\"")
+    }
+
 }

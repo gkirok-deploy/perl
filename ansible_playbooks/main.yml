@@ -7,9 +7,3 @@
     - common
     - docker
 
-- name: deploy ipinfo
-  hosts: ipinfo
-#  remote_user: centos
-
-  roles:
-    - ipinfo
