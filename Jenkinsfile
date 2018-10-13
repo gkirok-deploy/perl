@@ -58,6 +58,9 @@ node {
     }
 
     stage('ansible: requirements') {
+        withCredentials([string(credentialsId: 'cd9e3953-72b4-400e-9926-ab48a786179d', variable: 'ipinfo_token')]) {
+            sh "echo \"${ipinfo_token}\" > ansible_playbooks/ipinfo.token"
+        }
         ansiblePlaybook(
             playbook: 'ansible_playbooks/main.yml',
             inventory: 'ansible_playbooks/inventory.ini',
@@ -66,13 +69,15 @@ node {
             sudo: true)
     }
     stage('ansible: deploy') {
-        ansiblePlaybook(
-            playbook: 'ansible_playbooks/deploy.yml',
-            inventory: 'ansible_playbooks/inventory.ini',
-            credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
-            becomeUser: 'centos',
-            sudo: true,
-            extras: "-e ipinfo_version=\"${version}\"")
+        withCredentials([string(credentialsId: 'cd9e3953-72b4-400e-9926-ab48a786179d', variable: 'ipinfo_token')]) {
+            ansiblePlaybook(
+                playbook: 'ansible_playbooks/deploy.yml',
+                inventory: 'ansible_playbooks/inventory.ini',
+                credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
+                becomeUser: 'centos',
+                sudo: true,
+                extras: "-e ipinfo_version=\"${version}\" ipinfo_token=\"${ipinfo_token}\"")
+        }
     }
 
 }

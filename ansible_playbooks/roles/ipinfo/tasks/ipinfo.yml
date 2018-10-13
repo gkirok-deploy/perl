@@ -1,7 +1,10 @@
 ---
 
+- name: pull inmage
+  shell: docker pull gkirok/ipinfo:{{ ipinfo_version }}
+
 - name: stop container
   shell: docker rm -vf ipinfo
 
 - name: run container
-  shell: docker run -d -p 80:8080 --name ipinfo gkirok/ipinfo:{{ ipinfo_version }}
+  shell: docker run -d -v $(pwd)/ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:{{ ipinfo_version }}
