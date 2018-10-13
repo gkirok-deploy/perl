@@ -12,6 +12,8 @@ RUN perl Makefile.PL
 RUN test -z "$RELEASE_TESTING" || RELEASE_TESTING=1 make test && make install
 #RUN make && make install
 COPY output.pl /opt/output.pl
+COPY web.pl /opt/web.pl
+COPY ipinfo.token /opt/ipinfo.token
 COPY docker-entrypoint.sh /opt/docker-entrypoint.sh
 RUN test -z "$RELEASE_TESTING" || echo 'export RELEASE_TESTING=1 && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done;' > /opt/test.sh;
 ENTRYPOINT ["/opt/docker-entrypoint.sh"]
