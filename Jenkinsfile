@@ -64,6 +64,6 @@ node {
             credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
             becomeUser: 'centos',
             sudo: true,
-            extras: '-vvvv -e ipinfo_version="${version}"')
+            extras: "-vvvv -e ipinfo_version=\"${version}\"")
     }
 }
