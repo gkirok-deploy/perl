@@ -54,7 +54,7 @@ node {
             sh "${TERRAFORM_CMD} apply -lock=false -input=false tfplan"
             sh "echo '[ipinfo]' > ansible_playbooks/inventory.ini;"
             sh "${TERRAFORM_CMD} output -json gk_server_public_ips | jq '.value[0]' >> ansible_playbooks/inventory.ini"
-            def server_ip=readFile('ansible_playbooks/inventory.ini').trim()
+            server_ip=readFile('ansible_playbooks/inventory.ini').trim()
         }
     }
 
@@ -76,6 +76,8 @@ node {
                 sudo: true,
                 extras: "-e ipinfo_version=\"${version}\" -e ipinfo_token=\"${ipinfo_token}\"")
         }
+    }
+    stage('result') {
         echo "IPinfo version ${version} deployed to ${server_ip}"
     }
 }

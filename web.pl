@@ -38,6 +38,7 @@ sub handle_request {
       $result = $ipinfo->error_msg;
     }
 
+    print "HTTP/1.0 200 OK\r\n";
     print $cgi->header,
           $cgi->start_html("IPinfo"),
           $cgi->h1("IPinfo $path"),
@@ -47,7 +48,7 @@ sub handle_request {
     print "HTTP/1.0 400 Bad Request\r\n";
     print $cgi->header,
           $cgi->start_html('Bad Request'),
-          $cgi->h1('$ip is not a valid IPv4 address'),
+          $cgi->h1("'$ip' is not a valid IPv4 address"),
           $cgi->end_html;
   }
 }

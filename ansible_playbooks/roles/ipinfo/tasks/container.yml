@@ -1,6 +1,6 @@
 ---
 
-- name: pull inmage
+- name: pull image
   shell: docker pull gkirok/ipinfo:{{ ipinfo_version }}
 
 - name: stop container

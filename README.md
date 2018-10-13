@@ -2,17 +2,31 @@
 
 Official ipinfo.io Perl library
 
-## RUNNING IN DOCKER
+## REQUIREMENTS
 
-* docker build . -t gkirok/geo-ipinfo:latest; 
-* docker run -it gkirok/geo-ipinfo:latest
-* /usr/local/bin/perl /opt/output.pl 8.8.8.8 
-* export RELEASE_TESTING=yes && /bin/perl -T Geo-IPinfo/t/manifest.t
-* export RELEASE_TESTING=yes && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done
+* ipinfo token, you can get from https://ipinfo.io/account
 
-### BUILD TEST IMAGE AND RUN
-* docker build --build-arg RELEASE_TESTING=yes . -t gkirok/geo-ipinfo:test
-* docker run -it gkirok/geo-ipinfo:test
+## LOCAL RUNNING IN DOCKER
+
+1. clone project 
+2. create file ipinfo.token contains token as described above
+  * cat ipinfo.token
+  `1234567890abcd`
+3. build test image and run
+  * docker build --build-arg RELEASE_TESTING=yes . -t gkirok/ipinfo:test
+  * docker run -it gkirok/ipinfo:test
+4. build image
+  * docker build . -t gkirok/ipinfo:latest
+5. run container
+  * run as web service
+    * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest`
+    * `curl localhost/IP_YOU_WANT_TO_DESCRIBE`
+OR
+  * run single request
+    * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest IP_YOU_WANT_TO_DESCRIBE`
+
+## DEPLOY IPINFO BY USING JENKINS PIPELINE
+
 
 ## EXAMPLE
 
