@@ -8,7 +8,14 @@ use lib "Geo-IPinfo/lib";
 use Geo::IPinfo;
 
 my ($ip) = @ARGV;
-my $token = "14ceeb3ed116cb";
+my $token_filename = "ipinfo.token";
+
+open(my $fh, '<:encoding(UTF-8)', $token_filename)
+  or die "Could not open file '$token_filename' $!";
+
+my $token = <$fh>;
+chomp $token;
+
 
 if (defined $ip) {
   # if you have a valid token, use it
