@@ -1,6 +1,6 @@
 ---
 
-- name: Ensure old versions of Docker are not installed.
+- name: ensure old versions of docker are not installed
   package:
     name: 'remove'
     state: absent
@@ -9,12 +9,12 @@
     - docker-common
     - docker-engine
 
-- name: Add Docker GPG key.
+- name: add docker gpg key
   rpm_key:
     key: https://download.docker.com/linux/centos/gpg
     state: present
 
-- name: Add Docker repository.
+- name: add docker repository
   get_url:
     url: "{{ docker_yum_repo_url }}"
     dest: '/etc/yum.repos.d/docker-{{ docker_edition }}.repo'
@@ -25,7 +25,7 @@
 - name: install docker
   yum: name=docker state=present
 
-- name: enable start docker service
+- name: enable/start docker service
   service:
     name: docker
     enabled: yes
