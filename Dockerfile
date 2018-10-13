@@ -29,5 +29,6 @@ COPY output.pl /opt/output.pl
 # copying web.pl - web interface
 COPY web.pl /opt/web.pl
 
+WORKDIR /opt/
 COPY docker-entrypoint.sh /opt/docker-entrypoint.sh
 ENTRYPOINT ["/opt/docker-entrypoint.sh"]

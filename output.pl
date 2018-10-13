@@ -14,8 +14,6 @@ open(my $fh, '<:encoding(UTF-8)', $token_filename)
   or die "Could not open file '$token_filename' $!";
 
 my $token = <$fh>;
-chomp $token;
-
 
 if (defined $ip) {
   # if you have a valid token, use it

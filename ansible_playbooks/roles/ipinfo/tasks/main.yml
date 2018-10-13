@@ -5,5 +5,5 @@
     dest: /opt/ipinfo_token
     mode: 0600
 
-- name: include ipnfo
-  include: ipinfo.yml
+- name: run ipinfo into container
+  include: container.yml

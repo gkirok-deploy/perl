@@ -14,3 +14,5 @@ fi
 # allow running any command
 # inside the container
 exec "$@"
+
+sleep infinity
