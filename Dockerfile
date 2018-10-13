@@ -3,7 +3,7 @@ MAINTAINER  gkirok
 ARG RELEASE_TESTING
 
 RUN curl -L http://cpanmin.us | perl - App::cpanminus
-RUN cpanm --force URI JSON LWP::UserAgent LWP::Protocol::https
+RUN cpanm --force URI JSON LWP::UserAgent LWP::Protocol::https cpan HTTP::Server::Simple::CGI use Data::Validate::IP
 RUN test -z "$RELEASE_TESTING" || cpanm Test::CheckManifest Test::Pod Test::Pod::Coverage
 COPY ./Geo-IPinfo /opt/Geo-IPinfo
 WORKDIR /opt/Geo-IPinfo
