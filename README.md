@@ -10,20 +10,23 @@ Official ipinfo.io Perl library
 
 1. clone project 
 2. create file ipinfo.token contains token as described above
-  * cat ipinfo.token
-  `1234567890abcd`
+```
+    $ cat ipinfo.token
+    1234567890abcd
+```
 3. build test image and run
-  * docker build --build-arg RELEASE_TESTING=yes . -t gkirok/ipinfo:test
-  * docker run -it gkirok/ipinfo:test
+   * `docker build --build-arg RELEASE_TESTING=yes . -t gkirok/ipinfo:test`
+   * `docker run -it gkirok/ipinfo:test`
 4. build image
-  * docker build . -t gkirok/ipinfo:latest
+   * `docker build . -t gkirok/ipinfo:latest`
 5. run container
-  * run as web service
-    * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest`
-    * `curl localhost/IP_YOU_WANT_TO_DESCRIBE`
-OR
-  * run single request
-    * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest IP_YOU_WANT_TO_DESCRIBE`
+   * run as web service
+     * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest`
+     * `curl localhost/IP_YOU_WANT_TO_DESCRIBE`
+
+   OR
+   * run single request
+     * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest IP_YOU_WANT_TO_DESCRIBE`
 
 ## DEPLOY IPINFO BY USING JENKINS PIPELINE
 
