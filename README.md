@@ -1,7 +1,7 @@
 # Geo::IPinfo
 
-Official ipinfo.io Perl library
-Running into Non official docker container
+Official ipinfo.io Perl library. 
+Running into Non official docker container.
 
 ## REQUIREMENTS
 
@@ -31,13 +31,22 @@ Running into Non official docker container
 
 ## DEPLOY IPINFO TO AWS EC2 USING JENKINS PIPELINE
 
-### HOW IT WORKS
-By default ipinfo web server will be deployed as docker container to t2.micro ec2 instance, has access by http to all, and ssh access from jenkins server and user 'access' server. 
-
 ### REQUIREMENTS
 1. aws credentials with full ec2 premissions
 2. installed Jenkins Pipeline server with configured docker, terraform and ansible
 
+### WHAT HAPPEN
+By default ipinfo web server will be deployed as docker container to t2.micro ec2 instance, has been accessed by http to all, and by ssh from jenkins server and user 'access' server.
+#### JENKINS PIPELINE STAGES
+* docker: build test image - building test image and running unit tests
+* docker: build & push image - building deploy image and push it to registry
+* terraform: pull & init - pulling terraform image and init project terraform folder
+* terraform: plan - create plan for deployed ec2 server and security group
+* terraform: apply - deploy ec2 server and security group
+* ansible: requirements - install required software as docker 
+* ansible: deploy - pull new image and redeploy ipinfo container
+* result - print ip of deployed server
+ 
 ### HOW TO START
 1. ssh connect to your jenkins server and generate private/public keys have been using to connect to ec2 server.
    and save it as `~/.ssh/tikal` and `~/.ssh/tikal.pub`
@@ -48,11 +57,17 @@ By default ipinfo web server will be deployed as docker container to t2.micro ec
    * ACCESS_IP
    * ipinfo_token
    * private key using to connect to ec2 server by ansible from step 1 ('3276ccf3-13bc-4408-b815-7b07bfd4e972' in Jenkinsfile)
+   * github credentials
+   * hub.docker.com credentials
 4. fork project
+5. create project in hub.docker.com
 5. edit Jenkinsfile, commit and push changes
    * replace ids of credentials have been configured in step 2.
+   * update global variables
 6. create new pipeline with forked project and run it
-   
+7. go to browser and enter ip of deployed server and ip yuu want to describe
+   * for example: `http://54.54.54.54/8.8.8.8`
+
 ## LOCAL RUNNING BY PERL
 ### EXAMPLE
 
