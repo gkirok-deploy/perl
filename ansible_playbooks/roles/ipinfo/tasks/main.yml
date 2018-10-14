@@ -1,0 +1,9 @@
+---
+- name: copy ipinfo.token
+  copy:
+    content: "{{ ipinfo_token }}"
+    dest: /opt/ipinfo_token
+    mode: 0600
+
+- name: run ipinfo into container
+  include: container.yml

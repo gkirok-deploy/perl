@@ -1,5 +1,5 @@
-resource "aws_security_group" "gk_security" {
-  name        = "${var.gk_rg_name}"
+resource "aws_security_group" "gk_sg" {
+  name        = "${var.gk_rg_name}-sg"
   description = "Allow web access to all and ssh to jenkins"
 
   ingress {
@@ -30,6 +30,13 @@ resource "aws_security_group" "gk_security" {
     cidr_blocks = ["${var.gk_access_ip}"]
   }
 
+  egress {
+    from_port       = 0
+    to_port         = 0
+    protocol        = "-1"
+    cidr_blocks     = ["0.0.0.0/0"]
+  }
+
   tags {
     Name = "${var.gk_rg_name}-sg"
     owner = "${var.gk_owner}"
@@ -37,7 +44,7 @@ resource "aws_security_group" "gk_security" {
   }
 }
 
-resource "aws_key_pair" "auth" {
-  key_name   = "${var.gk_owner}"
+resource "aws_key_pair" "gk_key" {
+  key_name   = "${var.gk_rg_name}-key"
   public_key = "${file(var.gk_public_key_path)}"
 }

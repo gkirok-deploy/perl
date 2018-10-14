@@ -1,20 +1,75 @@
 # Geo::IPinfo
 
-Official ipinfo.io Perl library
+Official ipinfo.io Perl library. 
+Running into Non official docker container.
 
-## RUNNING IN DOCKER
+## REQUIREMENTS
 
-* docker build . -t gkirok/geo-ipinfo:latest; 
-* docker run -it gkirok/geo-ipinfo:latest
-* /usr/local/bin/perl /opt/output.pl 8.8.8.8 
-* export RELEASE_TESTING=yes && /bin/perl -T Geo-IPinfo/t/manifest.t
-* export RELEASE_TESTING=yes && for i in /opt/Geo-IPinfo/t/*.t; do /usr/local/bin/perl -T $i; done
+* ipinfo token, you can get from https://ipinfo.io/account
 
-### BUILD TEST IMAGE AND RUN
-* docker build --build-arg RELEASE_TESTING=yes . -t gkirok/geo-ipinfo:test
-* docker run -it gkirok/geo-ipinfo:test
+## LOCAL RUNNING IN DOCKER
 
-## EXAMPLE
+1. clone project 
+2. create file ipinfo.token contains token as described above
+```
+    $ cat ipinfo.token
+    1234567890abcd
+```
+3. build test image and run
+   * `docker build --build-arg RELEASE_TESTING=yes . -t gkirok/ipinfo:test`
+   * `docker run -it gkirok/ipinfo:test`
+4. build image
+   * `docker build . -t gkirok/ipinfo:latest`
+5. run container
+   * run as web service
+     * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest`
+     * `curl localhost/IP_YOU_WANT_TO_DESCRIBE`
+
+   OR
+   * run single request
+     * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest IP_YOU_WANT_TO_DESCRIBE`
+
+## DEPLOY IPINFO TO AWS EC2 USING JENKINS PIPELINE
+
+### REQUIREMENTS
+1. aws credentials with full ec2 premissions
+2. installed Jenkins Pipeline server with configured docker, terraform and ansible
+
+### WHAT HAPPEN
+By default ipinfo web server will be deployed as docker container to t2.micro ec2 instance, has been accessed by http to all, and by ssh from jenkins server and user 'access' server.
+#### JENKINS PIPELINE STAGES
+* docker: build test image - building test image and running unit tests
+* docker: build & push image - building deploy image and push it to registry
+* terraform: pull & init - pulling terraform image and init project terraform folder
+* terraform: plan - create plan for deployed ec2 server and security group
+* terraform: apply - deploy ec2 server and security group
+* ansible: requirements - install required software as docker 
+* ansible: deploy - pull new image and redeploy ipinfo container
+* result - print ip of deployed server
+ 
+### HOW TO START
+1. ssh connect to your jenkins server and generate private/public keys have been using to connect to ec2 server.
+   and save it as `~/.ssh/tikal` and `~/.ssh/tikal.pub`
+2. add these credentials parameters to your jenkins server
+   * AWS_ACCESS_KEY_ID
+   * AWS_SECRET_ACCESS_KEY
+   * JENKINS_IP
+   * ACCESS_IP
+   * ipinfo_token
+   * private key using to connect to ec2 server by ansible from step 1 ('3276ccf3-13bc-4408-b815-7b07bfd4e972' in Jenkinsfile)
+   * github credentials
+   * hub.docker.com credentials
+4. fork project
+5. create project in hub.docker.com
+5. edit Jenkinsfile, commit and push changes
+   * replace ids of credentials have been configured in step 2.
+   * update global variables
+6. create new pipeline with forked project and run it
+7. go to browser and enter ip of deployed server and ip yuu want to describe
+   * for example: `http://54.54.54.54/8.8.8.8`
+
+## LOCAL RUNNING BY PERL
+### EXAMPLE
 
     use Geo::IPinfo;
 
@@ -48,7 +103,7 @@ Official ipinfo.io Perl library
 
     print "The city of 8.8.8.8 is $city\n";
 
-### OUTPUT
+#### OUTPUT
     Information about IP 8.8.8.8:
           city : Mountain View
        country : US
@@ -62,17 +117,17 @@ Official ipinfo.io Perl library
 
     The city of 8.8.8.8 is Mountain View
 
-## RUNNING TEST
+### RUNNING TEST
 * `export RELEASE_TESTING=yes && for i in *.t; do /bin/perl -T $i; done`
 
-## USAGE
+### USAGE
 
 For details about how to use the library, install it and then run:
 
     perldoc Geo::IPinfo
 
 
-## Before submitting to CPAN
+### Before submitting to CPAN
 
 Make sure ALL tests executed without errors; to do this, run:
 

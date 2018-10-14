@@ -1,0 +1,6 @@
+---
+- name: deploy ipinfo
+  hosts: ipinfo
+
+  roles:
+    - ipinfo
