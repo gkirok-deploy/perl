@@ -1,10 +1,10 @@
 ---
 
 - name: pull image
-  shell: docker pull gkirok/ipinfo:{{ ipinfo_version }}
+  shell: docker pull {{ ipinfo_image }}:{{ ipinfo_version }}
 
 - name: stop container
   shell: if docker ps -a | grep -q ipinfo; then docker rm -vf ipinfo; fi
 
 - name: run container
-  shell: docker run -d -v /opt/ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:{{ ipinfo_version }}
+  shell: docker run -d -v /opt/ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo {{ ipinfo_image }}:{{ ipinfo_version }}

@@ -1,11 +1,8 @@
 node {
-    parameters {
-        string(defaultValue: "tikal", description: 'customer name ?', name: 'gk_customer')
-        string(defaultValue: "gkirok", description: 'owner name ?', name: 'gk_owner')
-        string(defaultValue: "gkirok/ipinfo", description: 'docker image name ?', name: 'gk_image')
-    }
-
     def app
+    def gk_owner = "gkirok"
+    def gk_customer = "tikal"
+    def gk_image = "gkirok/ipinfo"
     def versionNumber = 1.0
     def TERRAFORM_CMD = 'docker run --network host -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -w /app -v ${HOME}/.ssh:/root/.ssh -v $(pwd)/../terraform-result/${BRANCH_NAME}:/app hashicorp/terraform:light'
 
@@ -21,13 +18,13 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build("${params.gk_image}:test-${version}", "--build-arg RELEASE_TESTING=1 .")
+        app = docker.build("${gk_image}:test-${version}", "--build-arg RELEASE_TESTING=1 .")
     }
     stage('docker: build & push image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
         docker.withRegistry('', '687f214f-6fa4-4f03-a90d-666880ed733f') {
-            app = docker.build("${params.gk_image}:${version}")
+            app = docker.build("${gk_image}:${version}")
             app.push()
 
             if (env.BRANCH_NAME == 'master') {
@@ -41,7 +38,7 @@ node {
     }
     stage('terraform: plan') {
         withCredentials([string(credentialsId: '1e72433f-2b8b-44b0-a339-57ae2a884ea4', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'd2fc2528-658d-4995-a8ba-c9e4f2d09e2d', variable: 'AWS_SECRET_ACCESS_KEY'), string(credentialsId: '4bdb8cb3-18f8-4e08-bf2c-73c006c12d15', variable: 'JENKINS_IP'), string(credentialsId: '6f78163f-c0f7-4b96-af9c-92a836e34171', variable: 'ACCESS_IP')]) {
-            sh "${TERRAFORM_CMD} plan -out=tfplan -input=false -var gk_access_ip=${ACCESS_IP} -var gk_jenkins_ip=${JENKINS_IP} -var gk_rg_name=${env.BRANCH_NAME} -var gk_customer=${params.gk_customer} -var gk_owner=${params.gk_owner}"
+            sh "${TERRAFORM_CMD} plan -out=tfplan -input=false -var gk_access_ip=${ACCESS_IP} -var gk_jenkins_ip=${JENKINS_IP} -var gk_rg_name=${env.BRANCH_NAME} -var gk_customer=${gk_customer} -var gk_owner=${gk_owner}"
         }
         if (env.BRANCH_NAME == 'master') {
             script {
@@ -76,7 +73,7 @@ node {
                 credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
                 becomeUser: 'centos',
                 sudo: true,
-                extras: "-e ipinfo_version=\"${version}\" -e ipinfo_token=\"${ipinfo_token}\"")
+                extras: "-e ipinfo_version=\"${version}\" -e ipinfo_token=\"${ipinfo_token}\" -e ipinfo_image=\"${gk_image}\"")
         }
     }
     stage('result') {
