@@ -1,6 +1,7 @@
 # Geo::IPinfo
 
 Official ipinfo.io Perl library
+Running into Non official docker container
 
 ## REQUIREMENTS
 
@@ -28,10 +29,32 @@ Official ipinfo.io Perl library
    * run single request
      * `docker run -d -v ipinfo.token:/opt/ipinfo.token -p 80:8080 --name ipinfo gkirok/ipinfo:latest IP_YOU_WANT_TO_DESCRIBE`
 
-## DEPLOY IPINFO BY USING JENKINS PIPELINE
+## DEPLOY IPINFO TO AWS EC2 USING JENKINS PIPELINE
 
+### HOW IT WORKS
+By default ipinfo web server will be deployed as docker container to t2.micro ec2 instance, has access by http to all, and ssh access from jenkins server and user 'access' server. 
 
-## EXAMPLE
+### REQUIREMENTS
+1. aws credentials with full ec2 premissions
+2. installed Jenkins Pipeline server with configured docker, terraform and ansible
+
+### HOW TO START
+1. ssh connect to your jenkins server and generate private/public keys have been using to connect to ec2 server.
+   and save it as `~/.ssh/tikal` and `~/.ssh/tikal.pub`
+2. add these credentials parameters to your jenkins server
+   * AWS_ACCESS_KEY_ID
+   * AWS_SECRET_ACCESS_KEY
+   * JENKINS_IP
+   * ACCESS_IP
+   * ipinfo_token
+   * private key using to connect to ec2 server by ansible from step 1 ('3276ccf3-13bc-4408-b815-7b07bfd4e972' in Jenkinsfile)
+4. fork project
+5. edit Jenkinsfile, commit and push changes
+   * replace ids of credentials have been configured in step 2.
+6. create new pipeline with forked project and run it
+   
+## LOCAL RUNNING BY PERL
+### EXAMPLE
 
     use Geo::IPinfo;
 
@@ -65,7 +88,7 @@ Official ipinfo.io Perl library
 
     print "The city of 8.8.8.8 is $city\n";
 
-### OUTPUT
+#### OUTPUT
     Information about IP 8.8.8.8:
           city : Mountain View
        country : US
@@ -79,17 +102,17 @@ Official ipinfo.io Perl library
 
     The city of 8.8.8.8 is Mountain View
 
-## RUNNING TEST
+### RUNNING TEST
 * `export RELEASE_TESTING=yes && for i in *.t; do /bin/perl -T $i; done`
 
-## USAGE
+### USAGE
 
 For details about how to use the library, install it and then run:
 
     perldoc Geo::IPinfo
 
 
-## Before submitting to CPAN
+### Before submitting to CPAN
 
 Make sure ALL tests executed without errors; to do this, run:
 
