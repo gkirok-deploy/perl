@@ -5,7 +5,7 @@ resource "null_resource" "check_connnection" {
       timeout     = "60m"
       host        = "${aws_instance.gk_server.*.public_ip}"
       user        = "centos"
-      private_key = "${file("~/.ssh/tikal")}"
+      private_key = "${file(var.gk_private_key_path)}"
     }
 
     inline = [

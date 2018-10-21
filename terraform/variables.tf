@@ -18,10 +18,18 @@ variable "gk_customer" {
   default = "gk-customer"
 }
 
+variable "gk_node_count" {
+  default = "3"
+}
+
 variable "gk_access_ip" {}
 
 variable "gk_jenkins_ip" {}
 
 variable "gk_public_key_path" {
-   default="~/.ssh/tikal.pub"
+  default="~/.ssh/tikal.pub"
+}
+
+variable "gk_private_key_path" {
+  default="~/.ssh/tikal"
 }

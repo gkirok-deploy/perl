@@ -53,6 +53,7 @@ node {
             sh "${TERRAFORM_CMD} apply -lock=false -input=false tfplan"
             sh "echo '[ipinfo]' > ansible_playbooks/inventory.ini;"
             sh "${TERRAFORM_CMD} output -json gk_server_public_ips | jq '.value[0]' >> ansible_playbooks/inventory.ini"
+            sh "${TERRAFORM_CMD} output -json gk_server_private_ips | jq '.value[0]' >> ansible_playbooks/hosts"
             server_ip=readFile('ansible_playbooks/inventory.ini').trim()
         }
     }
