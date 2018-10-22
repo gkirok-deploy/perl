@@ -1,0 +1,15 @@
+---
+
+- name: add kube repo
+  copy:
+    src: kubernetes.repo
+    dest: /etc/yum.repos.d/kubernetes.repo
+
+- name: install kubelet
+  yum: name=kubelet state=present
+
+- name: install kubeadm
+  yum: name=kubeadm state=present
+
+- name: install kubectl
+  yum: name=kubectl state=present

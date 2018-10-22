@@ -1,0 +1,12 @@
+---
+- name: disable selinux
+  shell: setenforce 0; sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+- name: disable swap
+  shell: swapoff -a
+
+- name: enable br_netfilter
+  shell: modprobe br_netfilter; echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables
+
+- name: install kube
+  include: kube.yml
