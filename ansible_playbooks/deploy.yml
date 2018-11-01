@@ -1,6 +1,6 @@
 ---
 - name: deploy ipinfo
-  hosts: ipinfo
+  hosts: kube
 
   roles:
     - ipinfo
