@@ -66,7 +66,7 @@ node {
             becomeUser: 'centos',
             sudo: true)
     }
-    stage('ansible: deploy') {
+/*    stage('ansible: deploy') {
         withCredentials([string(credentialsId: 'cd9e3953-72b4-400e-9926-ab48a786179d', variable: 'ipinfo_token')]) {
             ansiblePlaybook(
                 playbook: 'ansible_playbooks/deploy.yml',
@@ -76,7 +76,7 @@ node {
                 sudo: true,
                 extras: "-e ipinfo_version=\"${version}\" -e ipinfo_token=\"${ipinfo_token}\" -e ipinfo_image=\"${gk_image}\"")
         }
-    }
+    }*/
     stage('result') {
         echo "IPinfo version ${version} deployed to ${server_ip}"
     }

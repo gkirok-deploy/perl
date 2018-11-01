@@ -1,7 +1,7 @@
 resource "aws_instance" "gk_server" {
   ami = "${var.ami_id}"
   count = "${var.gk_node_count}"
-  instance_type = "t2.micro"
+  instance_type = "t2.small"
   vpc_security_group_ids = ["${aws_security_group.gk_sg.id}"]
   key_name = "${var.gk_rg_name}-key"
 
