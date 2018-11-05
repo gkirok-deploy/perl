@@ -1,0 +1,6 @@
+---
+- name: deploy ipinfo
+  hosts: kube-master
+
+  roles:
+    - helm

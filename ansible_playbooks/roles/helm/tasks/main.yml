@@ -1,0 +1,8 @@
+---
+
+- name: install helm
+  shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
+
+- name: copy helm files
+  copy: src=../../../../helm dest=~/ remote_src=yes directory_mode=yes
+
