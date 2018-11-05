@@ -78,6 +78,15 @@ node {
             sudo: true)
     }
 
+    stage('ansible: helm') {
+        ansiblePlaybook(
+            playbook: 'ansible_playbooks/helm.yml',
+            inventory: 'ansible_playbooks/kube.ini',
+            credentialsId: '3276ccf3-13bc-4408-b815-7b07bfd4e972',
+            becomeUser: 'centos',
+            sudo: true)
+    }
+
 /*    stage('ansible: deploy') {
         withCredentials([string(credentialsId: 'cd9e3953-72b4-400e-9926-ab48a786179d', variable: 'ipinfo_token')]) {
             ansiblePlaybook(
