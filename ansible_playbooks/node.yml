@@ -1,0 +1,7 @@
+---
+- name: kube node
+  hosts: kube-node
+  remote_user: centos
+
+  roles: 
+    - kube-node
