@@ -40,8 +40,8 @@
     enabled: yes
     state: started
 
-- name: install python-pip
-  yum: name=python-pip state=present
+#- name: install python-pip
+#  yum: name=python-pip state=present
 
-- name: install docker-py
-  shell: pip install 'docker-py>=1.7.0'
+#- name: install docker-py
+#  shell: pip install 'docker-py>=1.7.0'
