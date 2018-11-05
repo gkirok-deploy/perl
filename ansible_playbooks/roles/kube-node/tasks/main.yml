@@ -1,0 +1,9 @@
+---
+
+- name: copy kube join
+  copy:
+    src: ./kube.join
+    dest: ~/kube.join
+
+- name: kube join
+  shell: bash ~/kube.join
