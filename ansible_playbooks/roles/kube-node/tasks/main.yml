@@ -1,9 +1,13 @@
 ---
 
-- name: copy kube join
+- name: copy kube.init.result
   copy:
-    src: ./kube.join
-    dest: ~/kube.join
+    src: ../kube.init.result
+    dest: ~/kube.init.result
+
+- name: create kube.join
+  shell: cat ~/kube.init.result | grep -o 'kubeadm join[^"]*' | head -n 1 > ~/kube.join
+  register: kube-init
 
 - name: kube join
   shell: bash ~/kube.join

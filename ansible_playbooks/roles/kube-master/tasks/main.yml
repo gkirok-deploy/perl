@@ -4,11 +4,11 @@
   shell: kubeadm reset -f
 
 - name: kubeadm init
-  shell: kubeadm init --pod-network-cidr=10.244.0.0/16 | grep -o 'kubeadm join[^"]*' | head -n 1
-  register: kubejoin
+  shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+  register: kubeinit
 
-- name: save kube join
-  local_action: copy content={{ kubejoin }} dest=./kube.join
+- name: save kube init
+  local_action: copy content={{ kubeinit }} dest=./kube.init.result
   become: no
 
 - name: kube config
