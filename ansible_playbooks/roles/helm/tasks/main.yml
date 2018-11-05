@@ -3,6 +3,9 @@
 - name: install helm
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
 
+- name: helm init
+  shell: helm init
+
 - name: copy helm files
   copy: 
     src: ../../../../helm
