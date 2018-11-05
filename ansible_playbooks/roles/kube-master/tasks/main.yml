@@ -5,11 +5,14 @@
 
 - name: kubeadm init
   shell: kubeadm init --pod-network-cidr=10.244.0.0/16
-  register: hello
+  register: kube-init
 
-- name: save hello
-  local_action: copy content={{ hello }} dest=./hello.txt
+- name: save kube init
+  local_action: copy content={{ kube-init }} dest=./kube.init.result
   become: no
+
+- name: save kube join
+  local_action: shell cat ./kube.init.result | grep -o 'kubeadm join[^"]*' | head -n 1 > ./kube.join
 
 - name: kube config
   shell: mkdir -p $HOME/.kube; cp -i /etc/kubernetes/admin.conf $HOME/.kube/config; chown $(id -u):$(id -g) $HOME/.kube/config
