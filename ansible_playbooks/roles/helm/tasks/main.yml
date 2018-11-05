@@ -1,5 +1,8 @@
 ---
 
+- name: update sudoers secure_path
+  shell: sed -i --follow-symlinks 's/secure_path = \/sbin/secure_path = \/usr\/local\/bin:\/sbin/g' /etc/sudoers
+
 - name: install helm
   shell: curl https://raw.githubusercontent.com/helm/helm/master/scripts/get | bash
 
