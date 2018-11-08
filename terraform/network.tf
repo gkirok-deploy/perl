@@ -19,13 +19,35 @@ resource "aws_subnet" "public-subnet" {
 }
 
 # Define the private subnet
-resource "aws_subnet" "private-subnet" {
+resource "aws_subnet" "private-subnet-a" {
   vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "${var.private_subnet_cidr}"
+  cidr_block = "${var.private_subnet_a_cidr}"
+  availability_zone = "${var.aws_region}a"
+
+  tags {
+    Name = "private subnet a"
+  }
+}
+
+# Define the private subnet
+resource "aws_subnet" "private-subnet-b" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "${var.private_subnet_b_cidr}"
   availability_zone = "${var.aws_region}b"
 
   tags {
-    Name = "Database Private Subnet"
+    Name = "private subnet b"
+  }
+}
+
+# Define the private subnet
+resource "aws_subnet" "private-subnet-c" {
+  vpc_id = "${aws_vpc.default.id}"
+  cidr_block = "${var.private_subnet_c_cidr}"
+  availability_zone = "${var.aws_region}c"
+
+  tags {
+    Name = "private subnet c"
   }
 }
 
