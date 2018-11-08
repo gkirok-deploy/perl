@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: gkirok
+  repository: gkirok/ipinfo
   tag: latest
   pullPolicy: IfNotPresent
 
@@ -15,6 +15,7 @@ fullnameOverride: ""
 service:
   type: ClusterIP
   port: 80
+  targetPort: 8080
 
 ingress:
   enabled: false
