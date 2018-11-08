@@ -2,6 +2,8 @@ resource "aws_security_group" "gk_sg" {
   name        = "${var.gk_rg_name}-sg"
   description = "Allow web access to all and ssh to jenkins"
 
+  vpc_id = "${aws_vpc.default.id}"
+
   ingress {
     from_port   = 0
     to_port     = 22
