@@ -7,16 +7,16 @@ resource "aws_vpc" "default" {
   }
 }
 
-# Define the public subnet
-resource "aws_subnet" "public-subnet" {
-  vpc_id = "${aws_vpc.default.id}"
-  cidr_block = "${var.public_subnet_cidr}"
-  availability_zone = "${var.aws_region}a"
-
-  tags {
-    Name = "Web Public Subnet"
-  }
-}
+## Define the public subnet
+#resource "aws_subnet" "public-subnet" {
+#  vpc_id = "${aws_vpc.default.id}"
+#  cidr_block = "${var.public_subnet_cidr}"
+#  availability_zone = "${var.aws_region}a"
+#
+#  tags {
+#    Name = "Web Public Subnet"
+#  }
+#}
 
 # Define the private subnet
 resource "aws_subnet" "private-subnet-a" {
@@ -76,6 +76,6 @@ resource "aws_route_table" "web-public-rt" {
 
 # Assign the route table to the public Subnet
 resource "aws_route_table_association" "web-public-rt" {
-  subnet_id = "${aws_subnet.public-subnet.id}"
+  subnet_id = "${aws_subnet.private-subnet-a.id}"
   route_table_id = "${aws_route_table.web-public-rt.id}"
 }
