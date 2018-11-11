@@ -16,7 +16,7 @@
     directory_mode: yes
 
 - name: create rbac
-  shell: kubectl create -f helm/rbac-config.yaml
+  shell: kubectl create -f ~/helm/rbac-config.yaml
 
 - name: helm init
   shell: helm init --service-account tiller --upgrade

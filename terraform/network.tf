@@ -74,8 +74,33 @@ resource "aws_route_table" "web-public-rt" {
   }
 }
 
+# Define the route table
+resource "aws_route_table" "web-private-rt" {
+  vpc_id = "${aws_vpc.default.id}"
+
+  route {
+    cidr_block = "172.0.0.0/8"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
+
+  route {
+    cidr_block = "10.0.0.0/8"
+    gateway_id = "${aws_internet_gateway.gw.id}"
+  }
+
+  tags {
+    Name = "private subnet RT"
+  }
+}
+
 # Assign the route table to the public Subnet
 resource "aws_route_table_association" "web-public-rt" {
   subnet_id = "${aws_subnet.private-subnet-a.id}"
   route_table_id = "${aws_route_table.web-public-rt.id}"
+}
+
+# Assign the route table to the public Subnet
+resource "aws_route_table_association" "web-private-rt" {
+  subnet_id = "${aws_subnet.private-subnet-a.id}"
+  route_table_id = "${aws_route_table.web-private-rt.id}"
 }
