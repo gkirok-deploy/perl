@@ -2,7 +2,7 @@
 
 - name: copy kube.init.result
   copy:
-    src: ../kube.init.result
+    src: ../../kube.init.result
     dest: ~/kube.init.result
 
 - name: create kube.join
