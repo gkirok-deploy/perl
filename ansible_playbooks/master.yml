@@ -1,7 +1,7 @@
 ---
 - name: kube master
   hosts: kube-master
-  remote_user: centos
+  #  remote_user: centos
 
   roles: 
     - kube-master

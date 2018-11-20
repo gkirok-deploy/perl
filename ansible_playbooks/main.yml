@@ -1,7 +1,7 @@
 ---
 - name: common config
   hosts: all
-  remote_user: centos
+  #  remote_user: centos
 
   roles: 
     - common
