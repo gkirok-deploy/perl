@@ -49,6 +49,9 @@
     enabled: yes
     state: started
 
+- name: install compose
+  include: compose.yml
+
 #- name: install python-pip
 #  yum: name=python-pip state=present
 

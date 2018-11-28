@@ -1,0 +1,10 @@
+---
+
+- name: download compose
+  shell: curl -L "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-$(uname -s)-$(uname -m)" -o {{ docker_compose_path }}
+
+- name: chmod
+  shell: chmod +x {{ docker_compose_path }}
+
+- name: check installation
+  shell: {{ docker_compose_path }} --version

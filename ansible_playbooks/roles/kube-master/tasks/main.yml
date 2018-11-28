@@ -4,7 +4,7 @@
   shell: kubeadm reset -f
 
 - name: kubeadm init
-  shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+  shell: kubeadm init --pod-network-cidr=192.168.0.0/16
   register: kubeinit
 
 - name: save kube init
@@ -16,3 +16,15 @@
 
 - name: add flannel
   shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+- name: add rbac-kdd
+  shell: kubectl create -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+
+- name: add calico
+  shell: kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+
+- name: kubectl taint
+  shell: kubectl taint nodes --all node-role.kubernetes.io/master-
+
+- name: kube autocomplete
+  shell: echo "source <(kubectl completion bash)" >> $HOME/.bashrc
